@@ -2,7 +2,7 @@ package models
 
 type BusLine struct {
     ID          int
-    Number      string
+    Number      int
     Description string
     UrlUrbs     string
     UrlGazeta   string
