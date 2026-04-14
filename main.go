@@ -1,8 +1,7 @@
 package main
 
-import (
-	"fmt"
-)
+import "github.com/lourencogabe/buzao-bot/internal/server"
+
 func main() {
-	fmt.Println("Gabriel Safado")
+	server.StartServer()
 }
