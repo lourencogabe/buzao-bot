@@ -1,9 +1,11 @@
 package models
 
+import "gorm.io/gorm"
+
 type BusTime struct {
-	ID int
-	NumberLine int //chave externa
-	stop string
-	day string
-	time string
+	gorm.Model
+	NumberLine int `gorm:"column:NUMERO_LINHA"` //chave externa
+	stop string `gorm:"column:pontos"`
+	day string `gorm:"column:dia"`
+	time string `gorm:"column:horarios"`
 }
