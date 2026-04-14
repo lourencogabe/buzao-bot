@@ -15,7 +15,7 @@ func Connect() {
 		log.Fatal("Erro ao conectar no banco:", err)
 	}
 
-	db.AutoMigrate(&models.BusLine{})
+	db.AutoMigrate(&models.BusLine{}, &models.BusTime{})
 
 	DB = db
 }
