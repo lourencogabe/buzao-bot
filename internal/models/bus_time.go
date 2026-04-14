@@ -1,6 +1,6 @@
 package models
 
-struct BusTime {
+type BusTime struct {
 	ID int
 	NumberLine int //chave externa
 	stop string
