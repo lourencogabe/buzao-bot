@@ -5,7 +5,6 @@ import (
 
 	"github.com/joho/godotenv"
 	"github.com/lourencogabe/buzao-bot/external/bot"
-	"github.com/lourencogabe/buzao-bot/internal/data"
 	"github.com/lourencogabe/buzao-bot/internal/server"
 )
 
@@ -14,7 +13,7 @@ func main() {
 		log.Println(".env not loaded:", err)
 	}
 
-	data.Connect()
+	//data.Connect()
 	go bot.StartBot()
 	server.StartServer()
 }
