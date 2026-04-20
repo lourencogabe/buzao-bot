@@ -1,18 +1,20 @@
 package data
 
 import (
-	"log"
+	"github.com/lourencogabe/buzao-bot/internal/config"
+	"github.com/lourencogabe/buzao-bot/internal/models"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
-	"github.com/lourencogabe/buzao-bot/internal/models"
 )
 
 var DB *gorm.DB
+var logger *config.Logger
 
 func Connect() {
+	logger := config.GetLogger("SQlite")
 	db, err := gorm.Open(sqlite.Open("bus.db"), &gorm.Config{})
 	if err != nil {
-		log.Fatal("Erro ao conectar no banco:", err)
+		logger.ErrorF("failed to connect to database", err)
 	}
 
 	db.AutoMigrate(&models.BusLine{}, &models.BusTime{})
