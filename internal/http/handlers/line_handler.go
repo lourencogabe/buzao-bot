@@ -1,7 +1,13 @@
 package handlers
 
-import "gorm.io/gorm"
+import (
+	"net/http"
 
-type BusHandler struct {
-	db *gorm.DB
+	"github.com/gin-gonic/gin"
+)
+
+func GetLine(ctx *gin.Context) {
+	ctx.JSON(http.StatusOK, gin.H{
+		"message": "line found successfully",
+	})
 }
