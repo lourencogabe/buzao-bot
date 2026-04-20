@@ -14,7 +14,7 @@ func Connect() {
 	logger := config.GetLogger("SQlite")
 	db, err := gorm.Open(sqlite.Open("bus.db"), &gorm.Config{})
 	if err != nil {
-		logger.ErrorF("failed to connect to database", err)
+		logger.ErrorF("failed to connect to database: %v", err)
 	}
 
 	db.AutoMigrate(&models.BusLine{}, &models.BusTime{})
