@@ -12,9 +12,34 @@ import (
 	"go.etcd.io/bbolt"
 )
 
-// LoadCSVToDB carrega o arquivo CSV no banco de dados
+// IsDatabasePopulated verifica se o banco já foi populado
+func IsDatabasePopulated() bool {
+	var count int
+
+	DB.View(func(tx *bbolt.Tx) error {
+		b := tx.Bucket([]byte(LinesBucket))
+		if b == nil {
+			return nil
+		}
+		count = b.Stats().KeyN
+		return nil
+	})
+
+	return count > 0
+}
+
+// LoadCSVToDB carrega o arquivo CSV no banco de dados (apenas se vazio)
 func LoadCSVToDB() error {
 	logger := config.GetLogger("CSVLoader")
+
+	// Verificar se banco já foi populado
+	if IsDatabasePopulated() {
+		stats := countLines()
+		logger.InfoF("Banco de dados já populado com %d linhas. Pulando carregamento de CSV.", stats)
+		return nil
+	}
+
+	logger.Info("Banco vazio. Carregando dados do CSV...")
 
 	// Caminho relativo ao arquivo CSV
 	csvPath := filepath.Join("internal", "data", "ListaInicial.csv")
@@ -87,4 +112,20 @@ func LoadCSVToDB() error {
 
 	logger.InfoF("CSV carregado com sucesso: %d linhas inseridas", count)
 	return nil
+}
+
+// countLines conta quantas linhas existem no banco
+func countLines() int {
+	var count int
+
+	DB.View(func(tx *bbolt.Tx) error {
+		b := tx.Bucket([]byte(LinesBucket))
+		if b == nil {
+			return nil
+		}
+		count = b.Stats().KeyN
+		return nil
+	})
+
+	return count
 }
