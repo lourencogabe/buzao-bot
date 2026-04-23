@@ -20,6 +20,11 @@ func main() {
 	}
 
 	data.Connect()
+	// Carrega dados do CSV para o banco de dados
+	if err := data.LoadCSVToDB(); err != nil {
+		logger.ErrorF("erro ao carregar CSV: %v", err)
+	}
+
 	go bot.StartBot()
 	server.StartServer()
 }

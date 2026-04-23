@@ -8,7 +8,12 @@ import (
 func InitializeRoutes(router *gin.Engine) {
 	v1 := router.Group("buzao-bot/v1")
 	{
-		v1.GET("/line", handlers.GetLine)
-		v1.GET("/time", handlers.GetTime)
+		// Endpoints de linhas
+		v1.GET("/lines", handlers.GetAllLines)
+		v1.GET("/lines/:number", handlers.GetLineByNumber)
+		v1.GET("/lines/search", handlers.SearchLines)
+		v1.GET("/lines/:number/formatted", handlers.GetLineFormatted)
+
+		// Endpoint de horários (será implementado)
 	}
 }
